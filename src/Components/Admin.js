@@ -60,7 +60,7 @@ else{
   return(
     <div>
     <center><h1>Admin Login</h1></center>
-      <Alert alert={isalert} msg=" user credentials.Try again" type="danger"/>
+      <Alert alert={isalert} msg="Invalid user credentials.Try again" type="danger"/>
       <div className="container" >
         <div className="row">
           <div className="col-12 col-md-8 offset-md-2">

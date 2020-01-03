@@ -24,7 +24,7 @@ function App() {
       <h1>Environment Monitoring System</h1>
     </div>
     <Switch>
-      <Route exact path={'/'} component={()=><Redirect to='/login'/>}/>
+      <Route exact path={'/'} component={()=><Redirect to="/login"/>}/>
       <Route exact path={'/adminlogin'} component={()=><Admin handleLogin={handleLogin} setLogoutRedirect={setLogoutRedirect}/>}/>
       <Route exact path={'/login'} component={()=><Login handleLogin={handleLogin} setLogoutRedirect={setLogoutRedirect}/>}/>
       <Route exact path={'/passwordreset'} component={()=><PasswordReset handleLogin={handleLogin}/>}/>

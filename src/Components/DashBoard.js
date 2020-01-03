@@ -31,7 +31,7 @@ export default function DashBoard(props) {
     axios({method:'get',url:server+`/graphdata?userName=${encodeURIComponent(props.userName)}`,headers:{'x-access-token':props.token}}).then(res=>{
         let data = res.data;
         let pData = [],tData=[],hData=[];
-        if(data){
+        if(data.time){
         data.time.map((item,ind)=>{
           pData.push({x:item,y:data.pressure[ind]})
           tData.push({x:item,y:data.temperature[ind]})
@@ -95,7 +95,7 @@ export default function DashBoard(props) {
     return <Loading/>
   }
   else{
-  if((!props.userName && !props.logoutRedirect) || props.userName==='admin'){
+  if((!props.userName && !props.logoutRedirect && !limits) || props.userName==='admin'){
     return(
       <div>
         <center>
