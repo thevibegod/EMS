@@ -3,7 +3,8 @@ import Loading from './Loading';
 import server from '../server';
 import axios from 'axios';
 import Alert from './Alert';
-import {Link,Redirect} from 'react-router-dom';
+import {Redirect} from 'react-router-dom';
+import Header from './Header.js';
 
 export default function Admin({handleLogin,setLogoutRedirect}){
 
@@ -48,6 +49,7 @@ if(redirect){
 else{
 if(loading){
   return(<div>
+    <Header/>
     <div className="container">
         <div className="row"  style={{justifyContent:"center"}}>
           <Loading/>
@@ -59,11 +61,12 @@ if(loading){
 else{
   return(
     <div>
+    <Header/>
     <center><h1>Admin Login</h1></center>
       <Alert alert={isalert} msg="Invalid user credentials.Try again" type="danger"/>
       <div className="container" >
         <div className="row">
-          <div className="col-12 col-md-8 offset-md-2">
+          <div className="col-sm-6 offset-sm-3">
             <form onSubmit = {onSubmit}
               style={{
                 border : '1px solid gray',
@@ -73,7 +76,7 @@ else{
               }}>
               <div className="form-group row">
                 <label htmlFor="username" className="col-form-label col-12 col-md-2 h6">UserName </label>
-                <div className="col-12 col-md-10">
+                <div className="col-sm-8 offset-sm-1">
                   <input
                     type="text"
                     name="userName"
@@ -87,7 +90,7 @@ else{
               </div>
               <div className="form-group row">
                 <label htmlFor="password" className="col-form-label col-12 col-md-2 h6">Password </label>
-                <div className="col-12 col-md-10">
+                <div className="col-sm-8 offset-sm-1">
                   <input
                     type="password"
                     name="password"
@@ -99,7 +102,7 @@ else{
                     />
                 </div>
               </div>
-              <div className="col-12 col-md-4 offset-md-2">
+              <div className="col-sm-8 offset-sm-2">
                 <button type="submit" className="btn btn-primary btn-block" disabled={!validateForm()}>Login</button>
               </div>
             </form>
