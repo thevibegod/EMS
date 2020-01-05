@@ -45,11 +45,8 @@ export default function DeleteUser(props) {
     props.logout();
   }
 
-<<<<<<< HEAD
+
   if((!props.userName && !props.logoutRedirect) || props.userName!=='admin'){
-=======
-  if(!props.userName && !props.logoutRedirect && props.userName!=='admin'){
->>>>>>> ace4e0ab1f949639ad89ac71c432406321deb51f
     return(
       <div>
       <Header/>

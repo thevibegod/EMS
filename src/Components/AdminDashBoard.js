@@ -46,11 +46,7 @@ export default function AdminDashBoard(props) {
   const killLogin=(event)=>{
     props.logout();
   }
-<<<<<<< HEAD
   if((!window.localStorage.getItem('user') && !props.logoutRedirect) || props.userName!=='admin'){
-=======
-  if(!window.localStorage.getItem('user') && !props.logoutRedirect && props.userName!=='admin'){
->>>>>>> ace4e0ab1f949639ad89ac71c432406321deb51f
     return(
       <div>
       <Header/>
