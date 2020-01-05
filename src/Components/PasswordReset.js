@@ -4,6 +4,7 @@ import server from '../server';
 import axios from 'axios';
 import Alert from './Alert';
 import {Redirect} from 'react-router-dom';
+import Header from './Header.js';
 
 export default function PasswordReset(){
 
@@ -62,12 +63,16 @@ export default function PasswordReset(){
 
 if(redirect){
   return(
+    <div>
+    <Header/>
     <Redirect to="/login" />
+    </div>
   );
 }
 
 if(loading){
   return(<div>
+    <Header/>
     <center><h2>Password Reset</h2></center>
     <div className="container">
         <div className="row"  style={{justifyContent:"center"}}>
@@ -80,12 +85,13 @@ if(loading){
 if(isPasswordForm){
   return (
     <div>
+    <Header/>
     <center><h2>Password Reset</h2></center>
       <Alert alert={isalert} msg="Invalid OTP.Try again" type="danger"/>
       <Alert alert={redirectAlert} msg="Password changed Successfully.Redirecting to login page." type="success"/>
       <div className="container" >
         <div className="row">
-          <div className="col-12 col-md-8 offset-md-2">
+          <div className="col-sm-5  offset-sm-3">
             <p>An OTP has been sent to your registered mobile number.</p>
             <form onSubmit = {onSubmitOTP}
               style={{
@@ -95,8 +101,8 @@ if(isPasswordForm){
                 boxShadow : '0px 0px 3px 3px gray'
               }}>
               <div className="form-group row">
-                <label htmlFor="password" className="col-form-label col-12 col-md-2 h6">New Password</label>
-                <div className="col-12 col-md-10">
+                <label htmlFor="password" className="col-form-label  h6">&nbsp;&nbsp;New Password</label>
+                <div className="col-8 sm-offset-1">
                   <input
                     type="password"
                     name="password"
@@ -109,8 +115,8 @@ if(isPasswordForm){
                 </div>
               </div>
               <div className="form-group row">
-                <label htmlFor="otp" className="col-form-label col-12 col-md-2 h6">OTP</label>
-                <div className="col-12 col-md-10">
+                <label htmlFor="otp" className="col-form-label  h6">&nbsp;&nbsp;OTP&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                <div className="col-8">
                   <input
                     type="text"
                     name="otp"
@@ -122,7 +128,7 @@ if(isPasswordForm){
                     />
                 </div>
               </div>
-              <div className="col-12 col-md-4 offset-md-2">
+              <div className="col-8 offset-2">
                 <button type="submit" className="btn btn-primary btn-block" disabled={!validateOTPForm()}>Change Password</button>
                 <button onClick={onSubmit} className="btn btn-primary btn-block" >Resend OTP</button>
               </div>
@@ -135,11 +141,12 @@ if(isPasswordForm){
 }
   return(
     <div>
+    <Header/>
     <center><h2>Password Reset</h2></center>
-      <Alert alert={isalert} msg="Inavalid User Credentials.Try again" type="danger"/>
+      <Alert alert={isalert} msg="Invalid User Credentials.Try again" type="danger"/>
       <div className="container" >
         <div className="row">
-          <div className="col-12 col-md-8 offset-md-2">
+          <div className="col-sm-4 offset-sm-4">
             <form onSubmit = {onSubmit}
               style={{
                 border : '1px solid gray',
@@ -148,8 +155,8 @@ if(isPasswordForm){
                 boxShadow : '0px 0px 3px 3px gray'
               }}>
               <div className="form-group row">
-                <label htmlFor="username" className="col-form-label col-12 col-md-2 h6">UserName </label>
-                <div className="col-12 col-md-10">
+                <label htmlFor="username" className="col-form-label offset-1 h6">UserName </label>
+                <div className="col-sm-6 offset-1">
                   <input
                     type="text"
                     name="userName"
@@ -161,7 +168,7 @@ if(isPasswordForm){
                     />
                 </div>
               </div>
-              <div className="col-12 col-md-4 offset-md-2">
+              <div className="col-8 offset-2">
                 <button type="submit" className="btn btn-primary btn-block" disabled={!validateForm()}>Send OTP</button>
               </div>
             </form>

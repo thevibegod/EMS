@@ -4,6 +4,7 @@ import server from '../server';
 import axios from 'axios';
 import Alert from './Alert';
 import {Link,Redirect} from 'react-router-dom';
+import Header from './Header.js';
 
 export default function Login({handleLogin,setLogoutRedirect}){
 
@@ -29,16 +30,23 @@ export default function Login({handleLogin,setLogoutRedirect}){
     setLogoutRedirect(false);
     setLoading(true);
     axios.post(server+'/authenticate',{userName:userName,password:password}).then(res=>{
-      console.log(res)
       if(res.status===200){
       setRedirect(true);
       handleLogin(userName,res.data.token);
-
     }
 
-  }).catch(err=>{setLoading(false);
+  }).catch(err=>{
+    if(err.status===499){
+      axios.post(server+'/authenticate',{userName:userName,password:password}).then(res=>{
+        if(res.status===200){
+        setRedirect(true);
+        handleLogin(userName,res.data.token);
+      }
+    })
+  }
+  setLoading(false);
    setIsAlert(true);
-   setTimeout(()=>setIsAlert(false),3000);});
+   setTimeout(()=>setIsAlert(false),3000)});
   }
 
 if(redirect){
@@ -48,6 +56,7 @@ if(redirect){
 else{
 if(loading){
   return(<div>
+    <Header/>
     <div className="container">
         <div className="row"  style={{justifyContent:"center"}}>
           <Loading/>
@@ -59,11 +68,12 @@ if(loading){
 else{
   return(
     <div>
+    <Header/>
       <center><h1>Login</h1></center>
       <Alert alert={isalert} msg="Invalid user credentials.Try again" type="danger"/>
       <div className="container" >
         <div className="row">
-          <div className="col-12 col-md-8 offset-md-2">
+          <div className="col-sm-6 offset-sm-3 ">
             <form onSubmit = {onSubmit}
               style={{
                 border : '1px solid gray',
@@ -73,7 +83,7 @@ else{
               }}>
               <div className="form-group row">
                 <label htmlFor="username" className="col-form-label col-12 col-md-2 h6">UserName </label>
-                <div className="col-12 col-md-10">
+                <div className="col-8 offset-1">
                   <input
                     type="text"
                     name="userName"
@@ -87,7 +97,7 @@ else{
               </div>
               <div className="form-group row">
                 <label htmlFor="password" className="col-form-label col-12 col-md-2 h6">Password </label>
-                <div className="col-12 col-md-10">
+                <div className="col-8 offset-1">
                   <input
                     type="password"
                     name="password"
@@ -99,7 +109,7 @@ else{
                     />
                 </div>
               </div>
-              <div className="col-12 col-md-4 offset-md-2">
+              <div className="col-8 offset-2">
                 <button type="submit" className="btn btn-primary btn-block" disabled={!validateForm()}>Login</button>
                 <Link to="/passwordreset" className="btn btn-secondary btn-block" >Forgot Password</Link>
               </div>

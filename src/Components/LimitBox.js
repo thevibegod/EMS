@@ -44,33 +44,33 @@ export default function LimitBox({values,userName,token}){
   }
 
   return(
-        <form>
+        <form style={{  border : '1px solid gray',
+          padding : '10px',
+          borderRadius : '5px',
+          boxShadow : '0px 0px 3px 3px gray'}} className="col-sm-5 offset-sm-4 ">
         <Alert alert={successAlert===null?false:true} type={!successAlert?"danger":"success"} msg={!successAlert?"Error in updating limits":"Limits successfully updated"}/>
-          <p>Minimum Pressure Limit</p>
-          <input type="number" name="minPressure" id="minPressure" onChange={handleChange} value={limits.minPressure}/>
-          <p>Maximum Pressure Limit</p>
-          <input type="number" name="maxPressure" id="maxPressure" onChange={handleChange} value={limits.maxPressure}/>
-          <p>Minimum Temperature Limit</p>
-          <input type="number" name="minTemp" id="minTemp" onChange={handleChange} value={limits.minTemp}/>
-          <p>Maximum Temperature Limit</p>
-          <input type="number" name="maxTemp" id="maxTemp" onChange={handleChange} value={limits.maxTemp}/>
-          <p>Minimum Humidity Limit</p>
-          <input type="number" name="minHumidity" id="minHumidity" onChange={handleChange} value={limits.minHumidity}/>
-          <p>Maximum Humidity Limit</p>
-          <input type="number" name="maxHumidity" id="maxHumidity" onChange={handleChange} value={limits.maxHumidity}/>
-          <button className="btn btn-success" onClick={handleSubmit}>OK</button>
+        <div className="row" style={{padding:'10px'}}>
+        <label className="col-form-label offset-1 h6">Minimum Pressure Limit&nbsp;</label>
+        <input type="number" name="minPressure" className="col-sm-5 offset-sm-2" id="minPressure"  onChange={handleChange} value={limits.minPressure}/>
+        </div><div className="row" style={{padding:'10px'}}>
+        <label className="col-form-label offset-1 h6">Maximum Pressure Limit</label>
+        <input type="number" name="maxPressure" className="col-sm-5 offset-sm-2" id="maxPressure" onChange={handleChange} value={limits.maxPressure}/>
+        </div><div className="row" style={{padding:'10px'}}>
+        <label className="col-form-label offset-1 h6">Minimum Temperature Limit&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+        <input type="number" name="minTemp" className="col-sm-5 offset-sm-1" id="minTemp" onChange={handleChange} value={limits.minTemp}/>
+        </div><div className="row" style={{padding:'10px'}}>
+        <label className="col-form-label offset-1 h6">Maximum Temperature Limit&nbsp;&nbsp;&nbsp;&nbsp;</label>
+        <input type="number" name="maxTemp" className="col-sm-5 offset-sm-1" id="maxTemp" onChange={handleChange} value={limits.maxTemp} />
+        </div><div className="row" style={{padding:'10px'}}>
+        <label className="col-form-label offset-1 h6">Minimum Humidity Limit&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+        <input type="number" name="minHumidity" className="col-sm-5 offset-sm-1" id="minHumidity" onChange={handleChange} value={limits.minHumidity}/>
+        </div><div className="row" style={{padding:'10px'}}>
+        <label className="col-form-label offset-1 h6">Maximum Humidity Limit&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+        <input type="number" name="maxHumidity" className="col-sm-5 offset-sm-1" id="maxHumidity"  onChange={handleChange} value={limits.maxHumidity}/>
+        </div><div className="col-sm-4 offset-4" style={{paddingTop:'10px',paddingBottom:'0'}} >
+        <button className="btn btn-success" onClick={handleSubmit}>OK</button>
+        </div>
+
         </form>
       );
-}
-
-
-
-const containerStyle = {
-  border:'2px solid black',
-  display:'flex',
-  justifyContent:'space-around',
-  flexDirection:'row',
-  margin:'50px 0',
-  fontSize:'20px',
-  backgroundColor:'rgba(255,255,255,0.2)'
 }

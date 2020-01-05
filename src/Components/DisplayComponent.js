@@ -13,30 +13,12 @@ export default function DisplayComponent(props){
   const value = parseFloat(props.paramValue.split(' ')[0]);
 
   return(
-        <div style={value>=max || value<=min?containerStyle1:containerStyle2}>
-          <p>{props.paramName}</p>
-          <p>{props.paramValue+' '+props.type}</p>
+        <div className="card">
+        <div className="card-body">
+          <center><h4 className="card-title">{props.paramName}</h4></center>
+          <img src={props.url} style={{height:'250px',width:'250px'}} alt=" "/>
+          {value>=max || value<=min?<center><h5 className="card-text text-danger">{props.paramValue+' '+props.type}</h5></center>:<center><h5 className="card-text text-success">{props.paramValue+' '+props.type}</h5></center>}
+          </div>
         </div>
       );
-}
-
-
-const containerStyle1 = {
-  border:'2px solid black',
-  display:'flex',
-  justifyContent:'space-around',
-  flexDirection:'row',
-  margin:'50px 0',
-  fontSize:'20px',
-  backgroundColor:'rgba(255,0,0,0.2)'
-}
-
-const containerStyle2 = {
-  border:'2px solid black',
-  display:'flex',
-  justifyContent:'space-around',
-  flexDirection:'row',
-  margin:'50px 0',
-  fontSize:'20px',
-  backgroundColor:'rgba(255,255,255,0.2)'
 }

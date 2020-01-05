@@ -1,22 +1,18 @@
 import React, {
-  useState,
-  useEffect
+  useState
 } from 'react';
 import {
   Link,
   Redirect
 } from 'react-router-dom';
 import Alert from './Alert';
-import Loading from './Loading.js';
 import axios from 'axios';
-import server from '../server.js';
-
+import server from '../server';
+import Header from './Header';
+import Navbar from './AdminNavbar';
 
 export default function AdminDashBoard(props) {
-  const [loading,setLoading] = useState(false);
   const [successAlert,setSuccessAlert] = useState(null);
-  const [deleteAlert,setDeleteAlert] = useState(null);
-  const [nullAlert,setNullAlert] = useState(false);
   const [existAlert,setExistAlert] = useState(false);
 
   const handleSubmit =(event)=>{
@@ -46,41 +42,14 @@ export default function AdminDashBoard(props) {
 
   }
 
-  const handleDeleteUser =(event)=>{
-    event.preventDefault();
 
-    let body = event.target.children;
-    let data = {}
-    for(let i=0;i<body.length;i++){
-      if(body[i].value && body[i].name!=='')
-      data[body[i].name]=body[i].value;
-    }
-    axios({method:'get',url:server+`/deleteuser?userName=${data.userName}`,headers:{'x-access-token':props.token}})
-    .then((res)=>{
-      setDeleteAlert(true);
-      setTimeout(()=>setDeleteAlert(null),3000)
-    }).catch(err=>{
-      if(err.status===404){
-        setNullAlert(true);
-        setTimeout(()=>setNullAlert(null),3000)
-      }{
-      setDeleteAlert(false);
-      setTimeout(()=>setDeleteAlert(null),3000)
-  }  }
-    )
-
-  }
   const killLogin=(event)=>{
     props.logout();
   }
-
-  if(loading){
-    return <Loading/>
-  }
-  else{
-  if(!props.userName && !props.logoutRedirect){
+  if((!window.localStorage.getItem('user') && !props.logoutRedirect) || props.userName!=='admin'){
     return(
       <div>
+      <Header/>
         <center>
         <h1>Access Forbidden</h1>
         <strong>Whoops! You can't access this page because you are not logged in.</strong>
@@ -92,44 +61,52 @@ export default function AdminDashBoard(props) {
     return <Redirect to="/adminlogin"/>
   }
       return <div>
-                <center><h1>Admin DashBoard</h1></center>
-                <p>{`Hello ${props.userName}`}</p>
-                <button className="btn btn-danger" onClick={killLogin}>Logout</button>
+      <Navbar killLogin={killLogin} userName={props.userName}/>
+      <Header/>
 
-                <form onSubmit={handleSubmit}>
-                <center><h2>Create User</h2></center>
-                <Alert alert={existAlert} type="danger" msg="User or NodeID already exist."/>
-                <Alert alert={successAlert===null?false:true} type={!successAlert?"danger":"success"} msg={!successAlert?"Error in creating user":"User Created"}/>
-                <p>UserName</p>
-                <input type="text" name="userName" id="userName" />
-                <p>Password</p>
-                <input type="password" name="password" id="password" />
-                <p>NodeId</p>
-                <input type="text" name="nodeId"  />
-                <p>Minimum Pressure Limit</p>
-                <input type="number" name="minPressure" id="minPressure" />
-                <p>Maximum Pressure Limit</p>
-                <input type="number" name="maxPressure" id="maxPressure"/>
-                <p>Minimum Temperature Limit</p>
-                <input type="number" name="minTemp" id="minTemp" />
-                <p>Maximum Temperature Limit</p>
-                <input type="number" name="maxTemp" id="maxTemp" />
-                <p>Minimum Humidity Limit</p>
-                <input type="number" name="minHumidity" id="minHumidity" />
-                <p>Maximum Humidity Limit</p>
-                <input type="number" name="maxHumidity" id="maxHumidity" />
+              <center><h2>Create User</h2></center>
+              <Alert alert={existAlert} type="danger" msg="User or NodeID already exist."/>
+              <Alert alert={successAlert===null?false:true} type={!successAlert?"danger":"success"} msg={!successAlert?"Error in creating user":"User Created"}/>
+              <div className="col-sm-5 offset-sm-4 ">
+                <form onSubmit={handleSubmit}   style={{
+                    border : '1px solid gray',
+                    padding : '10px',
+                    borderRadius : '5px',
+                    boxShadow : '0px 0px 3px 3px gray'
+                  }}>
+
+
+            <div className="row" style={{padding:'10px'}}>
+                <label className="col-form-label offset-1 h6">UserName&nbsp;&nbsp;</label>
+                <input type="text" name="userName" className="col-sm-5 offset-sm-4" id="userName" />
+                </div><div className="row" style={{padding:'10px'}}>
+                <label className="col-form-label offset-1  h6">Password&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                <input type="password" name="password" className="col-sm-5 offset-sm-4" id="password" />
+                </div><div className="row" style={{padding:'10px'}}>
+                <label className="col-form-label offset-1 h6">NodeId&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                <input type="text" name="nodeId"  className="col-sm-5 offset-sm-4" id="nodeId"/>
+                </div><div className="row" style={{padding:'10px'}}>
+                <label className="col-form-label offset-1 h6">Minimum Pressure Limit&nbsp;</label>
+                <input type="number" name="minPressure" className="col-sm-5 offset-sm-2" id="minPressure" />
+                </div><div className="row" style={{padding:'10px'}}>
+                <label className="col-form-label offset-1 h6">Maximum Pressure Limit</label>
+                <input type="number" name="maxPressure" className="col-sm-5 offset-sm-2" id="maxPressure"/>
+                </div><div className="row" style={{padding:'10px'}}>
+                <label className="col-form-label offset-1 h6">Minimum Temperature Limit&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                <input type="number" name="minTemp" className="col-sm-5 offset-sm-1" id="minTemp" />
+                </div><div className="row" style={{padding:'10px'}}>
+                <label className="col-form-label offset-1 h6">Maximum Temperature Limit&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                <input type="number" name="maxTemp" className="col-sm-5 offset-sm-1" id="maxTemp" />
+                </div><div className="row" style={{padding:'10px'}}>
+                <label className="col-form-label offset-1 h6">Minimum Humidity Limit&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                <input type="number" name="minHumidity" className="col-sm-5 offset-sm-1" id="minHumidity" />
+                </div><div className="row" style={{padding:'10px'}}>
+                <label className="col-form-label offset-1 h6">Maximum Humidity Limit&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                <input type="number" name="maxHumidity" className="col-sm-5 offset-sm-1" id="maxHumidity" />
+              </div><div style={{paddingTop:'10px',paddingBottom:'0'}} className="col-sm-4 offset-4">
                 <input type="submit" className="btn btn-success" value="Create"/>
+                </div>
                 </form>
-
-                <form onSubmit={handleDeleteUser}>
-                <center><h2>Delete User</h2></center>
-                <Alert alert={nullAlert} type="danger" msg="No user found."/>
-                <Alert alert={deleteAlert===null?false:true} type={!deleteAlert?"danger":"success"} msg={!deleteAlert?"Error in deleting user":"User Deleted"}/>
-                <p>UserName</p>
-                <input type="text" name="userName" id="userName" />
-                <input type="submit" className="btn btn-danger" value="Delete"/>
-                </form>
+                </div>
               </div>
-}
-
 }

@@ -1,8 +1,6 @@
 import React from 'react';
 import Alert from './Alert.js';
 import CanvasJSReact from '../canvasjs.react';
-// var CanvasJSReact = require('../canvasjs.react');
-var CanvasJS = CanvasJSReact.CanvasJS;
  var CanvasJSChart = CanvasJSReact.CanvasJSChart;
 
 export default function GraphComponent(props){
@@ -17,13 +15,13 @@ export default function GraphComponent(props){
       const seconds = Math.floor(( new Date(end).getTime()- new Date(start).getTime())/1000);
       data.map(obj=>{
         organizedData.push({x:new Date(obj.x),y:parseFloat(obj.y)})
+        return 200;
       })
       if(seconds<60){
         gap=10;
         interval="second";
         axisLabel="hh mm ss TT"
       }else if(seconds<3600){
-        const minutes = Math.floor(seconds/60);
         gap=5;
         interval="minute"
         axisLabel="hh mm ss TT"
@@ -74,9 +72,7 @@ export default function GraphComponent(props){
   return (
      <div>
       <Alert type="danger" alert={!props.data} msg={"No "+props.graphTitle+ " data found."}/>
-       <CanvasJSChart options = {options}
-           /* onRef = {ref => this.chart = ref} */
-       />
+       <CanvasJSChart options = {options}/>
      </div>
    );
 }
