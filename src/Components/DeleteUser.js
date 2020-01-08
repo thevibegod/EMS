@@ -14,19 +14,12 @@ import Navbar from './AdminNavbar';
 export default function DeleteUser(props) {
   const [deleteAlert,setDeleteAlert] = useState(null);
   const [nullAlert,setNullAlert] = useState(false);
-
+  const [userNameValue,setUserNameValue] = useState('');
 
 
   const handleDeleteUser =(event)=>{
     event.preventDefault();
-
-    let body = event.target.children;
-    let data = {}
-    for(let i=0;i<body.length;i++){
-      if(body[i].value && body[i].name!=='')
-      data[body[i].name]=body[i].value;
-    }
-    axios({method:'get',url:server+`/deleteuser?userName=${data.userName}`,headers:{'x-access-token':props.token}})
+    axios({method:'get',url:server+`/deleteuser?userName=${userNameValue}`,headers:{'x-access-token':props.token}})
     .then((res)=>{
       setDeleteAlert(true);
       setTimeout(()=>setDeleteAlert(null),3000)
@@ -39,12 +32,11 @@ export default function DeleteUser(props) {
       setTimeout(()=>setDeleteAlert(null),3000)
     }
     )
-
   }
   const killLogin=(event)=>{
     props.logout();
   }
-
+  const change = (e)=>setUserNameValue(e.target.value)
 
   if((!props.userName && !props.logoutRedirect) || props.userName!=='admin'){
     return(
@@ -82,6 +74,7 @@ export default function DeleteUser(props) {
                         id="username"
                         className="form-control"
                         placeholder="UserName"
+                        onChange = {change}
                         />
                     </div>
                   </div>
